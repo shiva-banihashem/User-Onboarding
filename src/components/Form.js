@@ -25,7 +25,11 @@ const FormUser = ({ values, errors, touched, status }) => {
               <Field type="password" name="password" placeholder="Password" />
               {touched.password && errors.password && (
               <p className="error">{errors.password}</p>)}
-              
+              <Field component="select" className="role-select" name="role">
+          <option>Please Choose an Option</option>
+          <option value="Salesperson">Salesperson</option>
+          <option value="Manager">Manager</option>
+          <option value="Developer">Developer</option>/></Field>
         <label className="checkbox-container">
           <Field className=""
             type="checkbox"
@@ -51,11 +55,12 @@ const FormUser = ({ values, errors, touched, status }) => {
         );
       };
       const FormikUserForm = withFormik({
-        mapPropsToValues({ usernames, email, password,termsOfService }) {
+        mapPropsToValues({ usernames, email, password,role,termsOfService }) {
           return {
             usernames: usernames || "",
             email: email || "",
             password: password || "",
+            role: role || "",
             termsOfService: termsOfService || true
             
           };
@@ -66,6 +71,8 @@ const FormUser = ({ values, errors, touched, status }) => {
           password:Yup.string().required("passwrod is required!!!"),
           termsOfService:Yup.bool("terms of service is required!")
         }),
+        
+         
         //You can use this to see the values
         handleSubmit(values, { setStatus }) {
           axios
